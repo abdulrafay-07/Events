@@ -65,7 +65,7 @@ export const LoginForm = () => {
          };
 
          if (result?.url) {
-            router.replace("/dashboard");
+            router.replace("/");
          };
       } catch (error) {
          const axiosError = error as AxiosError<ApiResponse>

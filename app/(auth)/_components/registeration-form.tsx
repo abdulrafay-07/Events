@@ -53,7 +53,7 @@ export const RegisterationForm = () => {
             description: response.data.message,
          });
 
-         router.replace("/login");
+         router.replace("/");
       } catch (error) {
          const axiosError = error as AxiosError<ApiResponse>
          toast({

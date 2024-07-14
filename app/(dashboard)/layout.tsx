@@ -4,9 +4,11 @@ export default function RootLayout({
    children,
 }: { children: React.ReactNode }) {
    return (
-      <div>
+      <div className="bg-gray-100 flex min-h-screen">
          <Sidebar />
-         {children}
+         <div className="pl-6 p-4">
+            {children}
+         </div>
       </div>
    );
 };

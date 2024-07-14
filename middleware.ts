@@ -8,8 +8,7 @@ export const config = {
    matcher: [
       "/login",
       "/register",
-      "/",
-      "/dashboard/:path*"
+      "/:path*",
    ],
 };
 
@@ -22,13 +21,12 @@ export async function middleware(request: NextRequest) {
 
    if (token && (
       url.pathname === "/login" ||
-      url.pathname === "/register" ||
-      url.pathname === "/"
+      url.pathname === "/register"
    )) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
    };
 
-   if (!token && url.pathname.startsWith("/dashboard")) {
+   if (!token && url.pathname.startsWith("/")) {
       return NextResponse.redirect(new URL("/login", request.url));
    };
 };
