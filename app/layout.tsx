@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 
 import { Toaster } from "@/components/ui/toaster";
 
-const font = Inter({
-  subsets: ["latin"]
+const font = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -26,4 +27,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
