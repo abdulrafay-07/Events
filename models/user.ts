@@ -11,14 +11,14 @@ export interface User extends Document {
 const userSchema: Schema<User> = new Schema({
    username: {
       type: String,
-      required: [true, "Userame is required"],
+      required: [true, "Username is required"],
       minlength: 3,
       maxlength: 20,
    },
    email: {
       type: String,
       required: [true, "Email is required"],
-      match: [/.+\@.+\..+/, "Use a valid email address"],
+      match: /.+\@.+\..+/,
    },
    password: {
       type: String,
