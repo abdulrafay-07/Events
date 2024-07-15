@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios, { AxiosError } from "axios";
+import { signIn } from "next-auth/react";
 
 import { registerSchema } from "@/validation-schemas/register";
 import { ApiResponse } from "@/types/api-response";
@@ -51,6 +52,12 @@ export const RegisterationForm = () => {
          toast({
             title: "Success",
             description: response.data.message,
+         });
+
+         await signIn("credentials", {
+            redirect: false,
+            identifier: data.email,
+            password: data.password,
          });
 
          router.replace("/");

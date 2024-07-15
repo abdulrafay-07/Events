@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Poppins } from "next/font/google";
 
 import { PageList } from "./page-list";
-import { Logout } from "./logout";
 
 import { cn } from "@/lib/utils";
 
@@ -14,8 +13,8 @@ const font = Poppins({
 
 export const Sidebar = () => {
    return (
-      <div className="bg-white shadow-2xl py-4 flex flex-col justify-between">
-         <div className="flex flex-col gap-6">
+      <div className="bg-white shadow-2xl py-4 flex flex-col justify-between w-full max-w-[18rem]">
+         <div className="flex flex-col gap-10">
             <Link href="/" className="pr-10 pl-4">
                <div className="flex gap-x-4 items-center">
                   <Image
@@ -35,9 +34,6 @@ export const Sidebar = () => {
                </div>
             </Link>
             <PageList />
-         </div>
-         <div className="pl-4 pr-8">
-            <Logout />
          </div>
       </div>
    )

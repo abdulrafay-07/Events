@@ -9,10 +9,10 @@ export const Header = ({
 }: HeaderProps) => {
    return (
       <div className="text-center">
-         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
+         <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-4">
             {heading}
          </h1>
-         <p className="mb-4 text-muted-foreground">
+         <p className="text-muted-foreground">
             {paragraph}
          </p>
       </div>

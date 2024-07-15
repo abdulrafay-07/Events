@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { House, CalendarPlus2, BookPlus } from "lucide-react";
 
 export const PageList = () => {
    const [url, setUrl] = useState("/");
@@ -20,21 +21,19 @@ export const PageList = () => {
          name: "Home",
          href: "/",
          isActive: pathname === "/",
-      },
-      {
-         name: "Your events",
-         href: "/your-events",
-         isActive: pathname === "/your-events",
+         icon: House,
       },
       {
          name: "Create an event",
          href: "/create-event",
          isActive: pathname === "/create-event",
+         icon: CalendarPlus2,
       },
       {
          name: "Public events",
          href: "/public-events",
          isActive: pathname === "/public-events",
+         icon: BookPlus,
       },
    ];
 
@@ -46,7 +45,7 @@ export const PageList = () => {
                   variant={page.isActive ? "secondary" : "ghost"}
                   className="w-full text-xl justify-start"
                >
-                  {page.name}
+                  <page.icon className="mr-2" /> {page.name}
                </Button>
             </Link>
          ))}

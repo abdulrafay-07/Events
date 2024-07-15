@@ -26,7 +26,9 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/", request.url));
    };
 
-   if (!token && url.pathname.startsWith("/")) {
+   if (!token && url.pathname === "/") {
       return NextResponse.redirect(new URL("/login", request.url));
    };
+
+   return NextResponse.next();
 };
