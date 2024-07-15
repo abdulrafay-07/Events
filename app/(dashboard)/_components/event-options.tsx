@@ -5,11 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import {
    Select,
-   SelectContent,
-   SelectItem,
    SelectTrigger,
    SelectValue,
 } from "@/components/ui/select";
+import { SelectCategories } from "./select-categories";
 import { Button } from "@/components/ui/button";
 
 import qs from "query-string";
@@ -42,28 +41,22 @@ export const EventOptions = () => {
             <SelectTrigger className="bg-secondary text-secondary-foreground hover:bg-secondary/80 border-none rounded-md w-[130px]">
                <SelectValue placeholder="Categories" />
             </SelectTrigger>
-            <SelectContent>
-               {categories.map((category) => (
-                  <SelectItem value={category.toLowerCase()} key={category}>
-                     {category}
-                  </SelectItem>
-               ))}
-            </SelectContent>
+            <SelectCategories all={true} />
          </Select>
          <div className="flex gap-x-3">
-            <Button
-               variant={type === "invite-only" ? "secondary" : "ghost"}
-               size="lg"
-               onClick={() => setEventType(type === "invite-only" ? "" : "invite-only")}
-            >
-               Invite-only
-            </Button>
             <Button
                variant={type === "public" ? "secondary" : "ghost"}
                size="lg"
                onClick={() => setEventType(type === "public" ? "" : "public")}
             >
                Public
+            </Button>
+            <Button
+               variant={type === "invite-only" ? "secondary" : "ghost"}
+               size="lg"
+               onClick={() => setEventType(type === "invite-only" ? "" : "invite-only")}
+            >
+               Invite only
             </Button>
          </div>
       </div>

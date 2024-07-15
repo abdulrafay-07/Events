@@ -26,12 +26,10 @@ export const eventSchema: Schema<Event> = new Schema({
    type: {
       type: String,
       required: [true, "Type is required"],
-      enum: ["Public", "Invite Only"],
    },
    category: {
       type: String,
       required: [true, "Category is required"],
-      enum: ["Conference", "Workshop", "Webinar", "Concert", "Meetup", "Networking", "Seminar", "Party", "Festival", "Exhibition", "Competition", "Training", "Charity", "Sports"],
    },
    location: {
       type: String,

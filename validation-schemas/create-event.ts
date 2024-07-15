@@ -17,10 +17,8 @@ export const createEventSchema = z.object({
       .max(200, {
          message: "Event description must not be greater than 200 characters",
       }),
-   type: z
-      .enum(["Public", "Invite Only"]),
-   category: z
-      .enum(["Conference", "Workshop", "Webinar", "Concert", "Meetup", "Networking", "Seminar", "Party", "Festival", "Exhibition", "Competition", "Training", "Charity", "Sports"]),
+   type: z.string(),
+   category: z.string(),
    location: z
       .string()
       .min(5, {
@@ -29,6 +27,6 @@ export const createEventSchema = z.object({
       .max(50, {
          message: "Location must not be greater than 50 characters",
       }),
-   createdAt: z.string().date(),
-   eventDate: z.string().date(),
+   createdAt: z.date(),
+   eventDate: z.date(),
 });

@@ -23,6 +23,8 @@ export async function POST(request: NextRequest) {
    };
 
    try {
+      const { name, description, type, category, location, createdAt, eventDate } = await request.json();
+
       const user = await UserModel.findOne({
          username: userData.username
       });
@@ -35,8 +37,6 @@ export async function POST(request: NextRequest) {
             status: 404
          });
       };
-
-      const { name, description, type, category, location, createdAt, eventDate } = await request.json();
 
       const event = {
          name,
