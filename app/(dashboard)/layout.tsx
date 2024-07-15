@@ -6,7 +6,7 @@ export default function RootLayout({
    return (
       <div className="bg-gray-100 flex min-h-screen w-full">
          <Sidebar />
-         <div className="px-8 py-20 w-full">
+         <div className="px-8 py-16 w-full">
             {children}
          </div>
       </div>

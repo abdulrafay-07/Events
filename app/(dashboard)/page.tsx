@@ -2,7 +2,7 @@ import { Navbar } from "./_components/navbar";
 
 const Dashboard = () => {
    return (
-      <div className="flex flex-col gap-x-20 max-w-[85%] mx-auto">
+      <div className="flex flex-col gap-20 max-w-[85%] mx-auto">
          <Navbar />
       </div>
    )
