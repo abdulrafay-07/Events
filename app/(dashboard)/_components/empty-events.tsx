@@ -14,9 +14,9 @@ export const EmptyEvents = () => {
          <h1 className="text-4xl font-semibold -mt-16 mb-1">No events found</h1>
          <p className="text-muted-foreground">
             Maybe try{" "}
-               <Link href="/create-event" className="text-black">
-                  creating one?
-               </Link>
+            <Link href="/create-event" className="text-black">
+               creating one?
+            </Link>
          </p>
       </div>
    )

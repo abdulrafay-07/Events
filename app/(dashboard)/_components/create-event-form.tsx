@@ -35,11 +35,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { useToast } from "@/components/ui/use-toast";
 import { SelectCategories } from "./select-categories";
-import { format } from "date-fns";
+import { SelectType } from "./select-type";
 import { Loader2, CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { SelectType } from "./select-type";
+import { format } from "date-fns";
 
 export const CreateEventForm = () => {
    const [isCreating, setIsCreating] = useState(false);
@@ -70,6 +70,8 @@ export const CreateEventForm = () => {
             title: "Success",
             description: response.data.message,
          });
+
+         router.replace(`/event/${response.data.event.events[response.data.event.events.length - 1]._id}`)
       } catch (error) {
          const axiosError = error as AxiosError<ApiResponse>
          toast({
@@ -77,15 +79,13 @@ export const CreateEventForm = () => {
             description: axiosError.response?.data.message,
             variant: "destructive",
          });
-
-         router.replace("/");
       } finally {
          setIsCreating(false);
       };
    };
 
    return (
-      <div className="flex flex-col gap-4 w-full max-w-[40rem] mx-auto bg-white shadow-2xl px-16 py-10 rounded-xl">
+      <div className="flex flex-col gap-4 w-full max-w-[40rem] mx-auto bg-white shadow-2xl px-16 py-20 rounded-xl">
          <h1 className="text-3xl text-center lg:text-4xl font-extrabold tracking-tight mb-2">Create an event</h1>
          <Form {...form}>
             <form

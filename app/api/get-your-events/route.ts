@@ -30,8 +30,6 @@ export async function GET() {
          { $group: {_id: "$_id", events: {$push: "$events"}} },
       ]);
 
-      console.log("events", userWithEvents)
-
       if (!userWithEvents || userWithEvents.length === 0) {
          return new Response(JSON.stringify({
             success: false,

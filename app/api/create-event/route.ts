@@ -50,11 +50,12 @@ export async function POST(request: NextRequest) {
 
       user.events.push(event as Event);
 
-      await user.save();
+      const savedEvent = await user.save();
 
       return Response.json({
          success: true,
          message: "Event successfully created",
+         event: savedEvent,
       }, {
          status: 200
       });
