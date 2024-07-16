@@ -53,6 +53,7 @@ export const UserEventList = () => {
                key={index}
                id={event._id}
                name={event.name}
+               type={event.type}
                category={event.category}
                eventDate={event.eventDate}
             />
