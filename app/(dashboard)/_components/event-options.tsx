@@ -8,20 +8,24 @@ import {
    SelectTrigger,
    SelectValue,
 } from "@/components/ui/select";
-import { SelectCategories } from "./select-categories";
 import { Button } from "@/components/ui/button";
+import { SelectCategories } from "./select-categories";
 
-import qs from "query-string";
+import qs from "query-string"
+import { X } from "lucide-react";
 
 export const EventOptions = () => {
    const [eventType, setEventType] = useState("");
-   const [category, setCategory] = useState("all");
+   const [category, setCategory] = useState("");
 
    const router = useRouter();
    const searchParams = useSearchParams();
    const type = searchParams.get("type");
 
-   const categories = ["All", "Conference", "Workshop", "Webinar", "Concert", "Meetup", "Networking", "Seminar", "Party", "Festival", "Exhibition", "Competition", "Training", "Charity", "Sports"];
+   const resetOptions = () => {
+      setEventType("");
+      setCategory("");
+   };
 
    useEffect(() => {
       const url = qs.stringifyUrl({
@@ -41,7 +45,7 @@ export const EventOptions = () => {
             <SelectTrigger className="bg-secondary text-secondary-foreground hover:bg-secondary/80 border-none rounded-md w-[130px]">
                <SelectValue placeholder="Categories" />
             </SelectTrigger>
-            <SelectCategories all={true} />
+            <SelectCategories />
          </Select>
          <div className="flex gap-x-3">
             <Button
@@ -58,6 +62,11 @@ export const EventOptions = () => {
             >
                Invite only
             </Button>
+            {(type || category) && (
+               <Button size="icon" variant="ghost" className="self-center" onClick={resetOptions}>
+                  <X />
+               </Button>
+            )}
          </div>
       </div>
    )

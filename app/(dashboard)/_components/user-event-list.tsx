@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { EmptyEvents } from "./empty-events";
 import { NewEventButton } from "./event-card/new-event-button";
@@ -15,7 +16,10 @@ export const UserEventList = () => {
    const [isFetchingUserEvents, setIsFetchingUserEvents] = useState(true);
    const [events, setEvents] = useState([]);
 
-   const fetchUserMessages = async () => {
+   const searchParams = useSearchParams();
+
+   const fetchUserEvents = async () => {
+      setIsFetchingUserEvents(true);
       try {
          const response = await axios.get("/api/get-your-events");
          
@@ -31,9 +35,38 @@ export const UserEventList = () => {
       };
    };
 
+   const fetchCustomEvents = async (type: string | null, category: string | null) => {
+      setIsFetchingUserEvents(true);
+      try {
+         const response = await axios.get("/api/get-custom-events", {
+            params: {
+               type,
+               category,
+            }
+         });
+
+         if (!response.data.success) {
+            throw new Error(response.data.message);
+         };
+         setEvents(response.data.events);
+      } catch (error: any) {
+         setEvents([]);
+         console.log(error.response.data);
+      } finally {
+         setIsFetchingUserEvents(false);
+      };
+   };
+
    useEffect(() => {
-      fetchUserMessages();
-   }, []);
+      const type = searchParams.get("type");
+      const category = searchParams.get("category");
+
+      if (type || category) {
+         fetchCustomEvents(type, category);
+      } else {
+         fetchUserEvents();
+      };
+   }, [searchParams]);
 
    if (isFetchingUserEvents) {
       return (
