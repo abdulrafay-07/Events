@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react";
+import Link from "next/link";
 
 import { ConfirmAction } from "./confirm-action";
 import {
@@ -12,11 +13,10 @@ import {
 import { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { Link2, Trash2 } from "lucide-react";
+import { Edit2, Link2, Trash2 } from "lucide-react";
 
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/api-response";
-import { useRouter } from "next/navigation";
 
 interface ActionProps {
    id: unknown;
@@ -34,7 +34,6 @@ export const Actions = ({
    const [isDeletingEvent, setIsDeletingEvent] = useState(false);
 
    const { toast } = useToast();
-   const router = useRouter();
 
    const copyLink = () => {
       navigator.clipboard.writeText(
@@ -106,6 +105,15 @@ export const Actions = ({
                   Delete
                </Button>
             </ConfirmAction>
+            <Link href={`/edit-event/${id}`}>
+               <Button
+                  variant="ghost"
+                  className="p-3 cursor-pointer text-sm w-full justify-start font-normal"
+               >
+                  <Edit2 className="h-4 w-4 mr-2" />
+                  Edit
+               </Button>
+            </Link>
          </DropdownMenuContent>
       </DropdownMenu>
    )

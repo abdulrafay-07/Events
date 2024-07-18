@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 import { EmptyEvents } from "./empty-events";
 import { NewEventButton } from "./event-card/new-event-button";
@@ -29,7 +30,7 @@ export const UserEventList = () => {
 
          setEvents(response.data.events);
       } catch (error: any) {
-         console.log(error.response.data);
+         console.log(error.response.data.message);
       } finally {
          setIsFetchingUserEvents(false);
       };
@@ -57,9 +58,9 @@ export const UserEventList = () => {
       };
    };
 
+   const type = searchParams.get("type");
+   const category = searchParams.get("category");
    useEffect(() => {
-      const type = searchParams.get("type");
-      const category = searchParams.get("category");
 
       if (type || category) {
          fetchCustomEvents(type, category);
@@ -77,7 +78,18 @@ export const UserEventList = () => {
    }
 
    return events.length === 0 ? (
-      <EmptyEvents />
+      <div className="flex flex-col items-center justify-center">
+         <EmptyEvents />
+         <h1 className="text-4xl font-semibold -mt-16 mb-1">No events found</h1>
+         {(!type && !category) && (
+            <p className="text-muted-foreground">
+               Maybe try{" "}
+               <Link href="/create-event" className="text-black">
+                  creating one?
+               </Link>
+            </p>
+         )}
+      </div>
    ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5 mt-8 pb-10">
          <NewEventButton />

@@ -10,13 +10,15 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { SelectCategories } from "./select-categories";
+import { X } from "lucide-react";
 
 import qs from "query-string"
-import { X } from "lucide-react";
 
 export const EventOptions = () => {
    const [eventType, setEventType] = useState("");
    const [category, setCategory] = useState("");
+   // this key is used to re-render the Select component when "X" is clicked
+   const [key, setKey] = useState(0);
 
    const router = useRouter();
    const searchParams = useSearchParams();
@@ -25,6 +27,7 @@ export const EventOptions = () => {
    const resetOptions = () => {
       setEventType("");
       setCategory("");
+      setKey(prevKey => prevKey + 1);
    };
 
    useEffect(() => {
@@ -41,7 +44,7 @@ export const EventOptions = () => {
 
    return (
       <div className="flex items-center gap-x-5">
-         <Select onValueChange={setCategory}>
+         <Select key={key} onValueChange={setCategory}>
             <SelectTrigger className="bg-secondary text-secondary-foreground hover:bg-secondary/80 border-none rounded-md w-[130px]">
                <SelectValue placeholder="Categories" />
             </SelectTrigger>

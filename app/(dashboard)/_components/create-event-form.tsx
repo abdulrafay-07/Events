@@ -40,8 +40,17 @@ import { Loader2, CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { EventProps } from "@/types/event-props";
 
-export const CreateEventForm = () => {
+interface EventFormProps {
+   event?: EventProps | null;
+   id?: string;
+};
+
+export const CreateEventForm = ({
+   event,
+   id,
+}: EventFormProps) => {
    const [isCreating, setIsCreating] = useState(false);
 
    const router = useRouter();
@@ -50,28 +59,47 @@ export const CreateEventForm = () => {
    const form = useForm<z.infer<typeof createEventSchema>>({
       resolver: zodResolver(createEventSchema),
       defaultValues: {
-         name: "",
-         description: "",
-         location: "",
-         createdAt: new Date(),
+         name: event?.name || "",
+         description: event?.description || "",
+         location: event?.location || "",
+         createdAt: event?.createdAt || new Date(),
+         type: event?.type,
+         category: event?.category,
+         eventDate: event?.eventDate,
       },
    });
 
    const onSubmit = async (data: z.infer<typeof createEventSchema>) => {
       setIsCreating(true);
+      console.log("inside")
       try {
-         const response = await axios.post<ApiResponse>("/api/create-event", data);
+         if (event) {
+            const response = await axios.put<ApiResponse>(`/api/update-event/${id}`, data);
+            console.log(response.data);
 
-         if (!response.data.success) {
-            throw new Error(response.data.message);
+            if (!response.data.success) {
+               throw new Error(response.data.message);
+            };
+
+            toast({
+               title: "Success",
+               description: response.data.message,
+            });
+
+         } else {
+            const response = await axios.post<ApiResponse>("/api/create-event", data);
+
+            if (!response.data.success) {
+               throw new Error(response.data.message);
+            };
+
+            toast({
+               title: "Success",
+               description: response.data.message,
+            });
+
+            router.replace(`/event/${response.data.event.events[response.data.event.events.length - 1]._id}`);
          };
-
-         toast({
-            title: "Success",
-            description: response.data.message,
-         });
-
-         router.replace(`/event/${response.data.event.events[response.data.event.events.length - 1]._id}`)
       } catch (error) {
          const axiosError = error as AxiosError<ApiResponse>
          toast({
@@ -86,7 +114,9 @@ export const CreateEventForm = () => {
 
    return (
       <div className="flex flex-col gap-4 w-full max-w-[40rem] mx-auto bg-white shadow-2xl px-16 py-20 rounded-xl">
-         <h1 className="text-3xl text-center lg:text-4xl font-extrabold tracking-tight mb-2">Create an event</h1>
+         <h1 className="text-3xl text-center lg:text-4xl font-extrabold tracking-tight mb-2">
+            {event ? "Update an event" : "Create an event"}
+         </h1>
          <Form {...form}>
             <form
                onSubmit={form.handleSubmit(onSubmit)}
@@ -138,9 +168,7 @@ export const CreateEventForm = () => {
                                     <SelectValue placeholder="Category" />
                                  </SelectTrigger>
                               </FormControl>
-                              <SelectCategories
-                                 all={false}
-                              />
+                              <SelectCategories />
                            </Select>
                            <FormMessage />
                         </FormItem>
@@ -229,7 +257,7 @@ export const CreateEventForm = () => {
                   {isCreating ? (
                      <Loader2 className="animate-spin" />
                   ) : (
-                     "Create an event"
+                     event ? "Update event" : "Create an event"
                   )}
                </Button>
             </form>
