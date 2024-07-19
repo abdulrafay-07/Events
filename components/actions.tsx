@@ -23,13 +23,15 @@ interface ActionProps {
    children: React.ReactNode;
    side?: DropdownMenuContentProps["side"];
    sideOffset?: DropdownMenuContentProps["sideOffset"];
+   showEditAndDelete?: boolean;
 };
 
 export const Actions = ({
    id,
    children,
    side,
-   sideOffset
+   sideOffset,
+   showEditAndDelete = true,
 }: ActionProps) => {
    const [isDeletingEvent, setIsDeletingEvent] = useState(false);
 
@@ -82,7 +84,7 @@ export const Actions = ({
             onClick={(e) => e.stopPropagation()}
             side={side}
             sideOffset={sideOffset}
-            className="w-60"
+            className={`w-60 ${!showEditAndDelete && "mb-16"}`}
          >
             <DropdownMenuItem
                onClick={copyLink}
@@ -91,29 +93,33 @@ export const Actions = ({
                <Link2 className="h-4 w-4 mr-2" />
                Copy event link
             </DropdownMenuItem>
-            <ConfirmAction
-               onConfirm={onDelete}
-               header="Delete event?"
-               description="This will delete the event and all of its contents."
-               disabled={isDeletingEvent}
-            >
-               <Button
-                  variant="ghost"
-                  className="p-3 cursor-pointer text-sm w-full justify-start font-normal"
-               >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
-               </Button>
-            </ConfirmAction>
-            <Link href={`/edit-event/${id}`}>
-               <Button
-                  variant="ghost"
-                  className="p-3 cursor-pointer text-sm w-full justify-start font-normal"
-               >
-                  <Edit2 className="h-4 w-4 mr-2" />
-                  Edit
-               </Button>
-            </Link>
+            {showEditAndDelete && (
+               <>
+                  <ConfirmAction
+                     onConfirm={onDelete}
+                     header="Delete event?"
+                     description="This will delete the event and all of its contents."
+                     disabled={isDeletingEvent}
+                  >
+                     <Button
+                        variant="ghost"
+                        className="p-3 cursor-pointer text-sm w-full justify-start font-normal"
+                     >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Delete
+                     </Button>
+                  </ConfirmAction>
+                  <Link href={`/edit-event/${id}`}>
+                     <Button
+                        variant="ghost"
+                        className="p-3 cursor-pointer text-sm w-full justify-start font-normal"
+                     >
+                        <Edit2 className="h-4 w-4 mr-2" />
+                        Edit
+                     </Button>
+                  </Link>
+               </>
+            )}
          </DropdownMenuContent>
       </DropdownMenu>
    )
